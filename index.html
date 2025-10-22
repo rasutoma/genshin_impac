@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genshin Impact 聖遺物計算サイト</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4a90e2, #9b59b6);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+        .sub-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select, input {
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1em;
+        }
+        select option {
+            background: #333;
+            color: #fff;
+        }
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        .gaming {
+            font-family: 'Press Start 2P', cursive;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        #commentSection {
+            margin-top: 20px;
+            display: none;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            resize: vertical;
+        }
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        #comments p {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .icon {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-calculator icon"></i>Genshin Impact 聖遺物計算</h1>
+        <form id="artifactForm">
+            <div class="form-group">
+                <label><i class="fas fa-star icon"></i>メインステータス (例: ATK%, HP%):</label>
+                <input type="text" id="mainStat" placeholder="ATK%">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-chart-line icon"></i>メインステータス値:</label>
+                <input type="number" id="mainValue" placeholder="50">
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-plus icon"></i>サブステータス1:</label>
+                <div class="sub-group">
+                    <select id="sub1">
+                        <option value="">選択してください</option>
+                        <option value="会心率">会心率</option>
+                        <option value="会心ダメージ">会心ダメージ</option>
+                        <option value="攻撃力%">攻撃力%</option>
+                        <option value="HP%">HP%</option>
+                        <option value="防御力%">防御力%</option>
+                        <option value="元素チャージ効率">元素チャージ効率</option>
+                        <option value="元素熟知">元素熟知</option>
+                        <option value="その他">その他</option>
+                    </select>
+                    <input type="number" id="sub1Value" placeholder="10">
+                </div>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-plus icon"></i>サブステータス2:</label>
+                <div class="sub-group">
+                    <select id="sub2">
+                        <option value="">選択してください</option>
+                        <option value="会心率">会心率</option>
+                        <option value="会心ダメージ">会心ダメージ</option>
+                        <option value="攻撃力%">攻撃力%</option>
+                        <option value="HP%">HP%</option>
+                        <option value="防御力%">防御力%</option>
+                        <option value="元素チャージ効率">元素チャージ効率</option>
+                        <option value="元素熟知">元素熟知</option>
+                        <option value="その他">その他</option>
+                    </select>
+                    <input type="number" id="sub2Value" placeholder="20">
+                </div>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-plus icon"></i>サブステータス3:</label>
+                <div class="sub-group">
+                    <select id="sub3">
+                        <option value="">選択してください</option>
+                        <option value="会心率">会心率</option>
+                        <option value="会心ダメージ">会心ダメージ</option>
+                        <option value="攻撃力%">攻撃力%</option>
+                        <option value="HP%">HP%</option>
+                        <option value="防御力%">防御力%</option>
+                        <option value="元素チャージ効率">元素チャージ効率</option>
+                        <option value="元素熟知">元素熟知</option>
+                        <option value="その他">その他</option>
+                    </select>
+                    <input type="number" id="sub3Value" placeholder="30">
+                </div>
+            </div>
+            <div class="form-group">
+                <label><i class="fas fa-plus icon"></i>サブステータス4:</label>
+                <div class="sub-group">
+                    <select id="sub4">
+                        <option value="">選択してください</option>
+                        <option value="会心率">会心率</option>
+                        <option value="会心ダメージ">会心ダメージ</option>
+                        <option value="攻撃力%">攻撃力%</option>
+                        <option value="HP%">HP%</option>
+                        <option value="防御力%">防御力%</option>
+                        <option value="元素チャージ効率">元素チャージ効率</option>
+                        <option value="元素熟知">元素熟知</option>
+                        <option value="その他">その他</option>
+                    </select>
+                    <input type="number" id="sub4Value" placeholder="40">
+                </div>
+            </div>
+            <button type="button" onclick="calculateScore()"><i class="fas fa-cogs icon"></i>計算</button>
+        </form>
+        <div id="result"></div>
+        <div id="commentSection">
+            <h2><i class="fas fa-comment icon"></i>コメント</h2>
+            <textarea id="comment" placeholder="スコアに対するコメントを入力"></textarea><br>
+            <button onclick="addComment()"><i class="fas fa-paper-plane icon"></i>コメント追加</button>
+            <div id="comments"></div>
+        </div>
+    </div>
+
+    <script>
+        function calculateScore() {
+            const mainValue = parseFloat(document.getElementById('mainValue').value) || 0;
+            const subValues = [
+                parseFloat(document.getElementById('sub1Value').value) || 0,
+                parseFloat(document.getElementById('sub2Value').value) || 0,
+                parseFloat(document.getElementById('sub3Value').value) || 0,
+                parseFloat(document.getElementById('sub4Value').value) || 0
+            ];
+            const totalSub = subValues.reduce((a, b) => a + b, 0);
+            const score = mainValue + totalSub; // 簡易計算（実際のゲームロジックに合わせる）
+
+            let rank, className = '';
+            if (score < 100) rank = 'C';
+            else if (score < 150) rank = 'B';
+            else if (score < 200) rank = 'A';
+            else if (score < 250) rank = 'S';
+            else rank = 'SS';
+
+            if (rank === 'S' || rank === 'SS') className = 'gaming';
+
+            document.getElementById('result').innerHTML = `<p><i class="fas fa-trophy icon"></i>スコア: <span class="${className}">${rank}</span> (合計: ${score})</p>`;
+            document.getElementById('commentSection').style.display = 'block';
+        }
+
+        function addComment() {
+            const comment = document.getElementById('comment').value;
+            if (comment) {
+                const commentsDiv = document.getElementById('comments');
+                commentsDiv.innerHTML += `<p><i class="fas fa-user icon"></i>${comment}</p>`;
+                document.getElementById('comment').value = '';
+            }
+        }
+    </script>
+</body>
+</html>
