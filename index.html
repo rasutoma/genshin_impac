@@ -36,24 +36,33 @@
         .form-group {
             display: flex;
             flex-direction: column;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         .sub-group {
             display: flex;
-            gap: 10px;
-            align-items: center;
+            flex-direction: column;
+            gap: 15px;
+            align-items: stretch;
+        }
+        .sub-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
         }
         label {
             margin-bottom: 5px;
             font-weight: bold;
+            font-size: 0.9em;
         }
         select, input {
-            padding: 10px;
+            padding: 12px;
             border: none;
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.2);
             color: #fff;
             font-size: 1em;
+            width: 100%;
         }
         select option {
             background: #333;
@@ -66,21 +75,22 @@
             background: linear-gradient(45deg, #ff6b6b, #ffa500);
             color: #fff;
             border: none;
-            padding: 12px 20px;
+            padding: 15px 25px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.1em;
             transition: transform 0.2s, box-shadow 0.2s;
             margin-top: 10px;
+            align-self: center;
         }
         button:hover {
             transform: scale(1.05);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         #result {
-            margin-top: 20px;
+            margin-top: 25px;
             text-align: center;
-            font-size: 1.2em;
+            font-size: 1.3em;
         }
         .gaming {
             font-family: 'Press Start 2P', cursive;
@@ -116,14 +126,15 @@
         }
 
         #commentSection {
-            margin-top: 20px;
+            margin-top: 25px;
             display: none;
         }
         #comments p {
             background: rgba(255, 255, 255, 0.1);
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             margin-top: 10px;
+            font-size: 0.95em;
         }
         .icon {
             margin-right: 10px;
@@ -145,10 +156,70 @@
             <div class="form-group">
                 <label><i class="fas fa-plus icon"></i>サブステータス:</label>
                 <div class="sub-group">
-                    <input type="number" id="sub1Value" placeholder="10">
-                    <input type="number" id="sub2Value" placeholder="20">
-                    <input type="number" id="sub3Value" placeholder="30">
-                    <input type="number" id="sub4Value" placeholder="40">
+                    <div class="sub-item">
+                        <select id="sub1Type">
+                            <option value="">選択してください</option>
+                            <option value="ATK%">攻撃力%</option>
+                            <option value="HP%">HP%</option>
+                            <option value="DEF%">防御力%</option>
+                            <option value="CRIT Rate%">会心率%</option>
+                            <option value="CRIT DMG%">会心ダメージ%</option>
+                            <option value="Energy Recharge%">元素チャージ効率%</option>
+                            <option value="Elemental Mastery">元素熟知</option>
+                            <option value="ATK">攻撃力</option>
+                            <option value="HP">HP</option>
+                            <option value="DEF">防御力</option>
+                        </select>
+                        <input type="number" id="sub1Value" placeholder="10">
+                    </div>
+                    <div class="sub-item">
+                        <select id="sub2Type">
+                            <option value="">選択してください</option>
+                            <option value="ATK%">攻撃力%</option>
+                            <option value="HP%">HP%</option>
+                            <option value="DEF%">防御力%</option>
+                            <option value="CRIT Rate%">会心率%</option>
+                            <option value="CRIT DMG%">会心ダメージ%</option>
+                            <option value="Energy Recharge%">元素チャージ効率%</option>
+                            <option value="Elemental Mastery">元素熟知</option>
+                            <option value="ATK">攻撃力</option>
+                            <option value="HP">HP</option>
+                            <option value="DEF">防御力</option>
+                        </select>
+                        <input type="number" id="sub2Value" placeholder="20">
+                    </div>
+                    <div class="sub-item">
+                        <select id="sub3Type">
+                            <option value="">選択してください</option>
+                            <option value="ATK%">攻撃力%</option>
+                            <option value="HP%">HP%</option>
+                            <option value="DEF%">防御力%</option>
+                            <option value="CRIT Rate%">会心率%</option>
+                            <option value="CRIT DMG%">会心ダメージ%</option>
+                            <option value="Energy Recharge%">元素チャージ効率%</option>
+                            <option value="Elemental Mastery">元素熟知</option>
+                            <option value="ATK">攻撃力</option>
+                            <option value="HP">HP</option>
+                            <option value="DEF">防御力</option>
+                        </select>
+                        <input type="number" id="sub3Value" placeholder="30">
+                    </div>
+                    <div class="sub-item">
+                        <select id="sub4Type">
+                            <option value="">選択してください</option>
+                            <option value="ATK%">攻撃力%</option>
+                            <option value="HP%">HP%</option>
+                            <option value="DEF%">防御力%</option>
+                            <option value="CRIT Rate%">会心率%</option>
+                            <option value="CRIT DMG%">会心ダメージ%</option>
+                            <option value="Energy Recharge%">元素チャージ効率%</option>
+                            <option value="Elemental Mastery">元素熟知</option>
+                            <option value="ATK">攻撃力</option>
+                            <option value="HP">HP</option>
+                            <option value="DEF">防御力</option>
+                        </select>
+                        <input type="number" id="sub4Value" placeholder="40">
+                    </div>
                 </div>
             </div>
             <button type="button" onclick="calculateScore()"><i class="fas fa-cogs icon"></i>計算</button>
@@ -211,8 +282,8 @@
                 ];
             } else if (rank === 'SS') {
                 comments = [
-                    { text: "は？？？", likes: 120 },
-                    { text: "適当書くなタコ助(運営通報レベル)", likes: 100 }
+                    { text: "は？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？", likes: 120 },
+                    { text: "適当書くなタコ助", likes: 100 }
                 ];
             }
 
