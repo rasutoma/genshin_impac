@@ -118,6 +118,7 @@
             -webkit-text-fill-color: transparent;
             animation: rainbowFlash 3s linear infinite;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            font-size: 3em; /* SSの時だけ馬鹿デカく */
         }
 
         @keyframes rainbowFlash {
@@ -258,44 +259,28 @@
             document.getElementById('result').innerHTML =
                 `<p><i class="fas fa-trophy icon"></i>スコア: <span class="${className}">${rank}</span> (合計: ${score})</p>`;
 
-            // コメント切り替え
+            // コメント切り替え（一言毒舌風に変更）
             let comments = [];
             if (rank === 'C') {
-                comments = [
-                    { text: "うーん…まだ伸びしろがありますね。", likes: 5 },
-                    { text: "厳選を続けましょう！", likes: 8 }
-                ];
+                comments = ["こんなんじゃダメだろ、もっと頑張れよ。"];
             } else if (rank === 'B') {
-                comments = [
-                    { text: "平均的な性能です。", likes: 10 },
-                    { text: "悪くはない、でももう少し欲しい！", likes: 15 }
-                ];
+                comments = ["まあまあだけど、期待外れだな。"];
             } else if (rank === 'A') {
-                comments = [
-                    { text: "かなりいい感じの聖遺物！", likes: 25 },
-                    { text: "攻撃・会心系が噛み合ってる！", likes: 32 }
-                ];
+                comments = ["悪くないけど、もっと良くないと。"];
             } else if (rank === 'S') {
-                comments = [
-                    { text: "これは強い！理想に近いです！", likes: 50 },
-                    { text: "神遺物一歩手前！", likes: 60 }
-                ];
+                comments = ["いい感じだけど、まだまだだぜ。"];
             } else if (rank === 'SS') {
                 comments = [
-                    { text: "は？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？", likes: 120 },
-                    { text: "適当書くなタコ助", likes: 100 }
+                    "は？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？",
+                    "適当書くなタコ助"
+          　　　　　 "運営通報しました。震えて眠れ"
                 ];
             }
-
-            // いいね順に並び替え
-            comments.sort((a, b) => b.likes - a.likes);
 
             const commentsDiv = document.getElementById('comments');
             commentsDiv.innerHTML = '';
             comments.forEach(comment => {
-                commentsDiv.innerHTML += `
-                    <p><i class="fas fa-user icon"></i>${comment.text} <span>👍 ${comment.likes}</span></p>
-                `;
+                commentsDiv.innerHTML += `<p><i class="fas fa-user icon"></i>${comment}</p>`;
             });
 
             document.getElementById('commentSection').style.display = 'block';
