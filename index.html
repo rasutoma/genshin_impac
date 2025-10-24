@@ -87,21 +87,37 @@
             color: #ffd700;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         }
+
+        /* 🌈 SSランク用の虹色アニメーション */
+        .rainbow {
+            font-family: 'Press Start 2P', cursive;
+            font-weight: bold;
+            background: linear-gradient(
+                90deg,
+                red,
+                orange,
+                yellow,
+                green,
+                cyan,
+                blue,
+                violet,
+                red
+            );
+            background-size: 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbowFlash 3s linear infinite;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes rainbowFlash {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
         #commentSection {
             margin-top: 20px;
             display: none;
-        }
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            resize: vertical;
-        }
-        textarea::placeholder {
-            color: rgba(255, 255, 255, 0.7);
         }
         #comments p {
             background: rgba(255, 255, 255, 0.1);
@@ -127,80 +143,20 @@
                 <input type="number" id="mainValue" placeholder="50">
             </div>
             <div class="form-group">
-                <label><i class="fas fa-plus icon"></i>サブステータス1:</label>
+                <label><i class="fas fa-plus icon"></i>サブステータス:</label>
                 <div class="sub-group">
-                    <select id="sub1">
-                        <option value="">選択してください</option>
-                        <option value="会心率">会心率</option>
-                        <option value="会心ダメージ">会心ダメージ</option>
-                        <option value="攻撃力%">攻撃力%</option>
-                        <option value="HP%">HP%</option>
-                        <option value="防御力%">防御力%</option>
-                        <option value="元素チャージ効率">元素チャージ効率</option>
-                        <option value="元素熟知">元素熟知</option>
-                        <option value="その他">その他</option>
-                    </select>
                     <input type="number" id="sub1Value" placeholder="10">
-                </div>
-            </div>
-            <div class="form-group">
-                <label><i class="fas fa-plus icon"></i>サブステータス2:</label>
-                <div class="sub-group">
-                    <select id="sub2">
-                        <option value="">選択してください</option>
-                        <option value="会心率">会心率</option>
-                        <option value="会心ダメージ">会心ダメージ</option>
-                        <option value="攻撃力%">攻撃力%</option>
-                        <option value="HP%">HP%</option>
-                        <option value="防御力%">防御力%</option>
-                        <option value="元素チャージ効率">元素チャージ効率</option>
-                        <option value="元素熟知">元素熟知</option>
-                        <option value="その他">その他</option>
-                    </select>
                     <input type="number" id="sub2Value" placeholder="20">
-                </div>
-            </div>
-            <div class="form-group">
-                <label><i class="fas fa-plus icon"></i>サブステータス3:</label>
-                <div class="sub-group">
-                    <select id="sub3">
-                        <option value="">選択してください</option>
-                        <option value="会心率">会心率</option>
-                        <option value="会心ダメージ">会心ダメージ</option>
-                        <option value="攻撃力%">攻撃力%</option>
-                        <option value="HP%">HP%</option>
-                        <option value="防御力%">防御力%</option>
-                        <option value="元素チャージ効率">元素チャージ効率</option>
-                        <option value="元素熟知">元素熟知</option>
-                        <option value="その他">その他</option>
-                    </select>
                     <input type="number" id="sub3Value" placeholder="30">
-                </div>
-            </div>
-            <div class="form-group">
-                <label><i class="fas fa-plus icon"></i>サブステータス4:</label>
-                <div class="sub-group">
-                    <select id="sub4">
-                        <option value="">選択してください</option>
-                        <option value="会心率">会心率</option>
-                        <option value="会心ダメージ">会心ダメージ</option>
-                        <option value="攻撃力%">攻撃力%</option>
-                        <option value="HP%">HP%</option>
-                        <option value="防御力%">防御力%</option>
-                        <option value="元素チャージ効率">元素チャージ効率</option>
-                        <option value="元素熟知">元素熟知</option>
-                        <option value="その他">その他</option>
-                    </select>
                     <input type="number" id="sub4Value" placeholder="40">
                 </div>
             </div>
             <button type="button" onclick="calculateScore()"><i class="fas fa-cogs icon"></i>計算</button>
         </form>
         <div id="result"></div>
+
         <div id="commentSection">
-            <h2><i class="fas fa-comment icon"></i>コメント</h2>
-            <textarea id="comment" placeholder="スコアに対するコメントを入力"></textarea><br>
-            <button onclick="addComment()"><i class="fas fa-paper-plane icon"></i>コメント追加</button>
+            <h2><i class="fas fa-comment icon"></i>評価コメント</h2>
             <div id="comments"></div>
         </div>
     </div>
@@ -215,7 +171,7 @@
                 parseFloat(document.getElementById('sub4Value').value) || 0
             ];
             const totalSub = subValues.reduce((a, b) => a + b, 0);
-            const score = mainValue + totalSub; // 簡易計算（実際のゲームロジックに合わせる）
+            const score = mainValue + totalSub;
 
             let rank, className = '';
             if (score < 100) rank = 'C';
@@ -224,19 +180,54 @@
             else if (score < 250) rank = 'S';
             else rank = 'SS';
 
-            if (rank === 'S' || rank === 'SS') className = 'gaming';
+            // クラス設定
+            if (rank === 'SS') className = 'rainbow';
+            else if (rank === 'S') className = 'gaming';
 
-            document.getElementById('result').innerHTML = `<p><i class="fas fa-trophy icon"></i>スコア: <span class="${className}">${rank}</span> (合計: ${score})</p>`;
-            document.getElementById('commentSection').style.display = 'block';
-        }
+            document.getElementById('result').innerHTML =
+                `<p><i class="fas fa-trophy icon"></i>スコア: <span class="${className}">${rank}</span> (合計: ${score})</p>`;
 
-        function addComment() {
-            const comment = document.getElementById('comment').value;
-            if (comment) {
-                const commentsDiv = document.getElementById('comments');
-                commentsDiv.innerHTML += `<p><i class="fas fa-user icon"></i>${comment}</p>`;
-                document.getElementById('comment').value = '';
+            // コメント切り替え
+            let comments = [];
+            if (rank === 'C') {
+                comments = [
+                    { text: "うーん…まだ伸びしろがありますね。", likes: 5 },
+                    { text: "厳選を続けましょう！", likes: 8 }
+                ];
+            } else if (rank === 'B') {
+                comments = [
+                    { text: "平均的な性能です。", likes: 10 },
+                    { text: "悪くはない、でももう少し欲しい！", likes: 15 }
+                ];
+            } else if (rank === 'A') {
+                comments = [
+                    { text: "かなりいい感じの聖遺物！", likes: 25 },
+                    { text: "攻撃・会心系が噛み合ってる！", likes: 32 }
+                ];
+            } else if (rank === 'S') {
+                comments = [
+                    { text: "これは強い！理想に近いです！", likes: 50 },
+                    { text: "神遺物一歩手前！", likes: 60 }
+                ];
+            } else if (rank === 'SS') {
+                comments = [
+                    { text: "は？？？", likes: 120 },
+                    { text: "適当書くなタコ助(運営通報レベル)", likes: 100 }
+                ];
             }
+
+            // いいね順に並び替え
+            comments.sort((a, b) => b.likes - a.likes);
+
+            const commentsDiv = document.getElementById('comments');
+            commentsDiv.innerHTML = '';
+            comments.forEach(comment => {
+                commentsDiv.innerHTML += `
+                    <p><i class="fas fa-user icon"></i>${comment.text} <span>👍 ${comment.likes}</span></p>
+                `;
+            });
+
+            document.getElementById('commentSection').style.display = 'block';
         }
     </script>
 </body>
